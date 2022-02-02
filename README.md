@@ -18,3 +18,16 @@
 **사용자 요청 흐름도**
 
 <img width="780" alt="화면 캡처 2022-02-02 174006" src="https://user-images.githubusercontent.com/84673603/152120438-29069a52-1f15-4ffa-80c9-1bc1f414d60a.png">
+
+## 주요기능 💗
+|<img width="200" alt="화면 캡처 2022-02-02 175609 - 복사본" src="https://user-images.githubusercontent.com/84673603/152123640-3016d2a5-8c83-4e30-83f2-7871b6ebf7b2.png">|<img width="200" alt="화면 캡처 2022-02-02 175609" src="https://user-images.githubusercontent.com/84673603/152123971-26c610b9-ba92-41f0-931a-da91faddff8e.png">|<img width="200" alt="화면 캡처 2022-02-02 175609 - 복사본 (2)" src="https://user-images.githubusercontent.com/84673603/152127973-473a340f-6bfc-4386-b49a-a0f4bf8c7daa.png">|
+|:---:|:---:|:---:|
+|✨ **회원가입 (소셜 회원가입)**|🔐 **로그인 (소셜 로그인)**|🔓 **회원, 식물 정보 수정**|
+
+|<img width="200" alt="화면 캡처 2022-02-02 175641 - 복사본 (2)" src="https://user-images.githubusercontent.com/84673603/152125324-ec045c95-d4d6-4368-ac96-691bd343e1a5.png">|<img width="200" alt="화면 캡처 2022-02-02 175641" src="https://user-images.githubusercontent.com/84673603/152125351-47e80aac-81e5-4da0-8a75-78970d382ce9.png">|<img width="200" alt="화면 캡처 2022-02-02 175707 - 복사본 (2)" src="https://user-images.githubusercontent.com/84673603/152125374-112549b2-14a6-42ae-abfc-2cb6e09db537.png">|
+|:---:|:---:|:---:|
+|🗂 **카테고리별 게시판**|👍 **게시글, 댓글 좋아요**|🔎 **식물 MBTI**|
+
+|<img width="200" alt="화면 캡처 2022-02-02 175641 - 복사본" src="https://user-images.githubusercontent.com/84673603/152128047-96baf764-d200-459f-9269-3bc8e0ead992.png">|<img width="200" alt="화면 캡처 2022-02-02 175707 - 복사본 (2)" src="https://user-images.githubusercontent.com/84673603/152126869-fc462b65-873b-45db-bf98-3ff2b3f1b7cf.png">|<img width="200" alt="화면 캡처 2022-02-02 175707 - 복사본" src="https://user-images.githubusercontent.com/84673603/152126990-4c829f0a-ea64-4da5-b145-26f058231adb.png">|
+|:---:|:---:|:---:|
+|💚 **팔로우**|🌱 **내 식물 정보 등록**|🏥 **식물 병원**|
