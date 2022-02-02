@@ -18,7 +18,8 @@
 ---
 
 ## 🌴 기술스택
-<img width="300" alt="back" src="https://user-images.githubusercontent.com/84673603/152118318-388ddaac-f3f8-483a-9c57-8096e8c9bf5d.png"> <img width="255" alt="화면 캡처 2022-02-02 161702" src="https://user-images.githubusercontent.com/84673603/152118421-96d8cd74-4f24-4b7d-aeb6-38378a4e87f0.png"> <img width="250" alt="화면 캡처 2022-02-02 161719" src="https://user-images.githubusercontent.com/84673603/152118438-fcfb63c0-8e97-4e33-a514-72ddd21fbd7b.png">
+<img width="300" alt="back" src="https://user-images.githubusercontent.com/84673603/152118318-388ddaac-f3f8-483a-9c57-8096e8c9bf5d.png"> <img width="255" alt="화면 캡처 2022-02-02 161702" src="https://user-images.githubusercontent.com/84673603/152118421-96d8cd74<img width="156" alt="화면 캡처 2022-02-02 175707" src="https://user-images.githubusercontent.com/84673603/152158043-e25711a9-aadc-45c4-8157-2fedfbcc4532.png">
+-4f24-4b7d-aeb6-38378a4e87f0.png"> <img width="250" alt="화면 캡처 2022-02-02 161719" src="https://user-images.githubusercontent.com/84673603/152118438-fcfb63c0-8e97-4e33-a514-72ddd21fbd7b.png">
 
 ## 🌾 아키텍쳐 
 **사용자 요청 흐름도**
@@ -30,7 +31,7 @@
 |:---:|:---:|:---:|
 |✨ **회원가입 (소셜 회원가입)**|🔐 **로그인 (소셜 로그인)**|🔓 **회원, 식물 정보 수정**|
 
-|<img width="200" alt="화면 캡처 2022-02-02 175641 - 복사본 (2)" src="https://user-images.githubusercontent.com/84673603/152125324-ec045c95-d4d6-4368-ac96-691bd343e1a5.png">|<img width="200" alt="화면 캡처 2022-02-02 175641" src="https://user-images.githubusercontent.com/84673603/152125351-47e80aac-81e5-4da0-8a75-78970d382ce9.png">|<img width="200" alt="화면 캡처 2022-02-02 175707 - 복사본 (2)" src="https://user-images.githubusercontent.com/84673603/152125374-112549b2-14a6-42ae-abfc-2cb6e09db537.png">|
+|<img width="200" alt="화면 캡처 2022-02-02 175641 - 복사본 (2)" src="https://user-images.githubusercontent.com/84673603/152125324-ec045c95-d4d6-4368-ac96-691bd343e1a5.png">|<img width="200" alt="화면 캡처 2022-02-02 175641" src="https://user-images.githubusercontent.com/84673603/152125351-47e80aac-81e5-4da0-8a75-78970d382ce9.png">|<img width="200" alt="화면 캡처 2022-02-02 175707" src="https://user-images.githubusercontent.com/84673603/152158228-f5aca673-67f3-464e-ab42-e1421db8558e.png">|
 |:---:|:---:|:---:|
 |🗂 **카테고리별 게시판**|👍 **게시글, 댓글 좋아요**|🔎 **식물 MBTI**|
 
