@@ -65,7 +65,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         } else {
             user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
-            tokenProvider.refreshToken(user.getId());
+            tokenProvider.createRefreshToken(user.getId());
         }
 
         return UserPrincipal.create(user, oAuth2User.getAttributes());

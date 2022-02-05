@@ -46,10 +46,10 @@ public class AuthService {
             throw new BadRequestException("접근 권한이 없습니다.");
         } else {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String accessToken = tokenProvider.createToken(authentication);
+            String refreshToken = tokenProvider.createRefreshToken(user.getId());
 
             return new ResponseEntity(AuthResponse.builder()
                     .accessToken(accessToken)
@@ -72,7 +72,7 @@ public class AuthService {
                 .build()
         );
 
-        tokenProvider.refreshToken(result.getId());
+        tokenProvider.createRefreshToken(result.getId());
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/user/me")
@@ -87,11 +87,5 @@ public class AuthService {
 
         refreshTokenDao.deleteByUser(user);
     }
-
-//    @PreAuthorize("hasRole('USER')")
-//    public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
-//        return userDao.findById(userPrincipal.getId())
-//                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
-//    }
 
 }
