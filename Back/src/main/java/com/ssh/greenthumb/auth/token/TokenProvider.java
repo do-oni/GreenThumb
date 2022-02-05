@@ -6,15 +6,20 @@ import com.ssh.greenthumb.api.domain.user.User;
 import com.ssh.greenthumb.auth.domain.RefreshToken;
 import com.ssh.greenthumb.auth.domain.UserPrincipal;
 import com.ssh.greenthumb.auth.repository.RefreshTokenRepository;
+import com.ssh.greenthumb.auth.service.CustomUserDetailsService;
 import io.jsonwebtoken.*;
+import org.aspectj.weaver.bcel.AtAjAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class TokenProvider {
@@ -26,50 +31,27 @@ public class TokenProvider {
     private RefreshTokenRepository refreshTokenDao;
     @Autowired
     private UserRepository userDao;
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
     public TokenProvider(AppProperties appProperties) {
         this.appProperties = appProperties;
     }
 
-//    @Transactional
-//    public Token createToken(Long userId) {
-//        String accessToken = Jwts.builder()
-//                .setHeaderParam("typ", "JWT")
-//                .setSubject(String.valueOf(userId))
-//                .setIssuedAt(new Date(System.currentTimeMillis()))
-//                .setExpiration(new Date(System.currentTimeMillis() + appProperties.getAuth().getAccessTokenExpiry()))
-//                .signWith(SignatureAlgorithm.HS512, appProperties.getAuth().getTokenSecret())
-//                .compact();
-//
-//        String refreshToken = Jwts.builder()
-//                .setIssuedAt(new Date(System.currentTimeMillis()))
-//                .setExpiration(new Date(System.currentTimeMillis() + appProperties.getAuth().getRefreshTokenExpiry()))
-//                .signWith(SignatureAlgorithm.HS256, appProperties.getAuth().getTokenSecret())
-//                .compact();
-//
-//        User user = userDao.findById(userId).orElseThrow(NotFoundException::new);
-//
-//        if (refreshTokenDao.findByUser(user) != null) {
-//            System.out.println(user);
-//            refreshTokenDao.deleteByUser(user);
-//        }
-//        refreshTokenDao.save(RefreshToken.builder().user(user).refreshToken(refreshToken).build());
-//
-//        return Token.builder()
-//                 .accessToken(accessToken)
-//                 .refreshToken(refreshToken)
-//                 .build();
-//    }
-
     @Transactional
     public String createToken(Authentication authentication) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        System.out.println(userPrincipal.getId());
-        System.out.println(appProperties.getAuth().getTokenSecret());
+
+        Map<String, Object> header = new HashMap<>();
+        header.put("type", "jwt");
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("userId", userPrincipal.getId());
 
         return Jwts.builder()
-                .setHeaderParam("typ", "JWT")
-                .setSubject(String.valueOf(userPrincipal.getId()))
+                .setHeader(header)
+                .setClaims(payload)
+                .setSubject("User Checking")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + appProperties.getAuth().getAccessTokenExpiry()))
                 .signWith(SignatureAlgorithm.HS512, appProperties.getAuth().getTokenSecret())
@@ -77,10 +59,17 @@ public class TokenProvider {
     }
 
     @Transactional
-    public String refreshToken(Long userId) {
+    public String createRefreshToken(Long userId) {
+        Map<String, Object> header = new HashMap<>();
+        header.put("type", "jwt");
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("userId", userId);
+
         String refreshToken = Jwts.builder()
-                .setHeaderParam("typ", "JWT")
-                .setSubject(userId.toString())
+                .setHeader(header)
+                .setClaims(payload)
+                .setSubject("User Checking")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + appProperties.getAuth().getRefreshTokenExpiry()))
                 .signWith(SignatureAlgorithm.HS256, appProperties.getAuth().getTokenSecret())
@@ -94,35 +83,21 @@ public class TokenProvider {
                 .build()).getRefreshToken();
     }
 
-//    @Transactional
-//    public Token reissue(Long userId, String refreshToken) {
-//        if (validateToken(refreshToken)) {
-//            String accessToken = Jwts.builder()
-//                    .setHeaderParam("typ", "JWT")
-//                    .setSubject(String.valueOf(userId))
-//                    .setIssuedAt(new Date(System.currentTimeMillis()))
-//                    .setExpiration(new Date(System.currentTimeMillis() + appProperties.getAuth().getAccessTokenExpiry()))
-//                    .signWith(SignatureAlgorithm.HS512, appProperties.getAuth().getTokenSecret())
-//                    .compact();
-//
-//            return Token.builder().accessToken(accessToken).refreshToken(refreshToken).build();
-//            }
-//        return createToken(userId);
-//    }
-
-    public Long getUserIdFromToken(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(appProperties.getAuth().getTokenSecret())
-                .parseClaimsJws(token)
-                .getBody();
-
-        return Long.parseLong(claims.getSubject());
+    public Authentication getAuthentication(String token) {
+        UserDetails userDetails = customUserDetailsService.loadUserById(this.getUserId(token));
+        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 
-    public boolean validateToken(String authToken) {
+    public Long getUserId(String token) {
+       return (Long) Jwts.parser()
+                .setSigningKey(appProperties.getAuth().getTokenSecret())
+                .parseClaimsJws(token)
+                .getBody().get("userId");
+    }
+
+    public boolean validateToken(String token) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(appProperties.getAuth().getTokenSecret()).parseClaimsJws(authToken);
-//            return claims.getBody().getExpiration().before(new Date(System.currentTimeMillis()));
+            Jwts.parser().setSigningKey(appProperties.getAuth().getTokenSecret()).parseClaimsJws(token);
             return true;
         } catch (SignatureException ex) {
             log.error("유효하지 않은 JWT 서명");
